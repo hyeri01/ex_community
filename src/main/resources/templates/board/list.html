@@ -29,7 +29,7 @@
             <tbody>
                 <tr th:each="board : ${boards}">
                     <td th:text="${board.id}"></td>
-                    <td th:text="${board.title}"></td>
+                    <td><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}"></a></td>
                     <td>@mdo</td>
                 </tr>
             </tbody>
