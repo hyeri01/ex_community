@@ -3,6 +3,7 @@ package com.ex_community.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class User {
 
     private String username;
     private String password;
-    private String enabled;
+    private Boolean enabled;
 
 
     @ManyToMany
@@ -23,6 +24,6 @@ public class User {
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
 
 }
