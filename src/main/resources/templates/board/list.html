@@ -18,6 +18,21 @@
     <div class="container">
         <h2>Board</h2>
         <div>총 건수 : <span th:text="${boards.totalElements}"></span></div>
+
+        <!-- 검색 기능 -->
+        <form class="row g-3 d-flex justify-content-end" method="get" th:action="@{/board/list}">
+            <div class="col-auto">
+                <label for="searchText" class="visually-hidden">Search</label>
+                <input type="text" class="form-control"
+                       id="searchText" name="searchText" placeholder="검색어를 입력하세요"
+                       th:value="${param.searchText}">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">submit</button>
+            </div>
+        </form>
+
+        <!-- 게시판 -->
         <table class="table">
             <thead>
                 <tr>
@@ -34,26 +49,37 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- 페이징 -->
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
+                <li class="page-item"
+                    th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
                     <!-- 값이 1이라면 Previous 비활성화-->
-                    <a class="page-link" th:href="@{/board/list(page=${boards.pageable.pageNumber - 1})}">Previous</a>
+                    <a class="page-link"
+                       th:href="@{/board/list(page=${boards.pageable.pageNumber - 1}, searchText=${param.searchText})}">Previous</a>
                     <!-- boards.pageable.pageNumber - 1 => 이전 페이지로 이동-->
                 </li>
-                <li class="page-item" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
-                    <a class="page-link" href="#" th:href="@{/board/list(page=${i - 1})}" th:text="${i}"></a>
+                <li class="page-item"
+                    th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'"
+                    th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#"
+                       th:href="@{/board/list(page=${i - 1}, searchText=${param.searchText})}" th:text="${i}"></a>
                     <!-- i - 1한 이유, 실제 페이지 number가 아닌 index 기준에 맞추기 위해서 -->
                 </li>
-                <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
+                <li class="page-item"
+                    th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
                     <!-- 현재 페이지가 가장 마지막의 페이지라면, Next 비활성화-->
-                    <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber + 1})}">Next</a>
+                    <a class="page-link" href="#"
+                       th:href="@{/board/list(page=${boards.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
                     <!-- boards.pageable.pageNumber + 1 => 다음 페이지로 이동-->
                 </li>
             </ul>
         </nav>
+
+        <!-- 글 쓰기 btn -->
         <div class="text-right">
-            <a th:href="@{/board/form}" class="btn btn-primary">write</a>
+            <a th:href="@{/board/form}" class="btn btn-light">write</a>
         </div>
     </div>
 
