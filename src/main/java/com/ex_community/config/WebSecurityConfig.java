@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() // 보안 check 하지 않는 것 (test 위해서 수정)
                 .authorizeRequests()
                 .antMatchers("/", "/account/register", "/api/**").permitAll()
                 .anyRequest().authenticated()

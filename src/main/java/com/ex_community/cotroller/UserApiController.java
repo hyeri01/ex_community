@@ -1,5 +1,6 @@
 package com.ex_community.cotroller;
 
+import com.ex_community.model.Board;
 import com.ex_community.model.User;
 import com.ex_community.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-class UserApiController {
+public class UserApiController {
 
     @Autowired
     private UserRepository repository;
@@ -37,6 +38,12 @@ class UserApiController {
                 .map(user -> {
 //                    user.setTitle(newUser.getTitle());
 //                    user.setContent(newUser.getContent());
+
+                    user.setBoards(newUser.getBoards());
+                    for(Board board : user.getBoards()){
+                        board.setUser(user);
+                        /* user == findById에 id로 조회한 user의 value */
+                    }
 
                     return repository.save(user);
                 })
