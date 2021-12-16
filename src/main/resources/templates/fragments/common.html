@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head(title)">
     <!-- Required meta tags -->
@@ -34,10 +35,25 @@
                             th:href="@{/board/list}">Board</a>
                     </li>
                 </ul>
-                <!-- <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form> -->
+
+                <!-- 로그인 -->
+                <a class="btn btn-secondary" th:href="@{/account/login}"
+                   sec:authorize="!isAuthenticated()">Login</a>
+
+                <!--회원가입-->
+                <a class="btn btn-secondary" th:href="@{/account/register}"
+                   sec:authorize="!isAuthenticated()">Join</a>
+
+                <!-- 로그아웃 -->
+                <!-- 로그아웃 경로 설정의 경우 WebSecurityConfig에서 logout 부분 설정해 주었기 때문에 가능-->
+                <form class="d-flex my-2" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                    <!-- 사용자 이름 -->
+                    <span class="text-white" sec:authentication="name"></span>
+                    <!-- 사용자의 권한 -->
+                    <span class="text-white mx-2" sec:authentication="principal.authorities"></span>
+                    <button class="btn btn-secondary" type="submit">Logout</button>
+                </form>
+
             </div>
         </div>
     </nav>
