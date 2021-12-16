@@ -1,5 +1,6 @@
 package com.ex_community.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,6 +27,8 @@ public class Board {
     /* name = 어떤 컬럼과 user table이 연결이 될 지 설정 */
     /* referencedColumnName = 사용자 table 어떤 컬럼과 연결되어 있는지 */
     /* referencedColumnName의 경우 @ID인 pk 값으로 지정되어 있으면 생략해도 괜찮다*/
+    @JsonIgnore
+    /* 값을 출력할 때, Board 안에 있는 User 정보는 가져오지 않도록 지정 */
     private User user;
 
 
