@@ -42,10 +42,12 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- board table 정보 불러오기-->
                 <tr th:each="board : ${boards}">
                     <td th:text="${board.id}"></td>
                     <td><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}"></a></td>
-                    <td>@mdo</td>
+                    <!-- Board table과 User tabel Join 했기 때문에 (ManytoOne) board.user로 username 조회 가능-->
+                    <td th:text="${board.user.username}">@mdo</td>
                 </tr>
             </tbody>
         </table>
