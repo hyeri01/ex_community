@@ -27,12 +27,18 @@ public class User {
 
     /* 사용자 조회 시, 작성한 게시글 조회 가능 */
     /* 현재 Board와 User은 양방향 mapping */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // user 변수에 정의해 뒀던 것을 동일하게 사용한다는 뜻
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    // user 변수에 정의해 뒀던 것을 동일하게 사용한다는 뜻
+
     /* 외부 클래스의 Entity save로 저장되지 않음.
     *   정보를 db에 같이 반영하고 싶으면, cascade = CascadeType 지정 */
     /* cascade => hibernate 문법 */
     /* JPA(interface) <- Hibernate(구현체) <- Spring Data JPA(Repository)*/
     /* Spring Data JPA가 Hibernate의 많은 코드들을 사용하지 않고, 간편히 사용가능하게 해 줌 */
+
+    /* orphanRemoval (default value =- false) */
+
+
     private List<Board> boards = new ArrayList<>();
 
 
