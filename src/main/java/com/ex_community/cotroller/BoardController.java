@@ -2,11 +2,13 @@ package com.ex_community.cotroller;
 
 import com.ex_community.model.Board;
 import com.ex_community.repository.BoardRepository;
+import com.ex_community.service.BoardService;
 import com.ex_community.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,9 @@ public class BoardController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private BoardService boardService;
 
     @Autowired
     private BoardValidator boardValidator;
@@ -55,12 +60,16 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String fromSubmit(@Valid Board board, BindingResult bindingResult){
+    public String postForm(@Valid Board board, BindingResult bindingResult, Authentication authentication){
         boardValidator.validate(board, bindingResult);
         if(bindingResult.hasErrors()){
             return "board/form";
         }
-        boardRepository.save(board); // save == insert
+        /* authentication => security에서 관리하는 것으로 서버에 있는 사용자 인증 정보를 가져올 수 있음*/
+        String username = authentication.getName();
+
+        boardService.save(username, board);
+        // boardRepository.save(board); // save == insert
         // save == id의 key 값이 있을 경우에는 update가, 없는 경우에는 insert
 
         return "redirect:/board/list";
