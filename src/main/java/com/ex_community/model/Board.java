@@ -20,6 +20,7 @@ public class Board {
     private String content;
 
 
+    /* 현재 Board와 User은 양방향 mapping */
     @ManyToOne
     @JoinColumn(name = "user_id")
     /* name = 어떤 컬럼과 user table이 연결이 될 지 설정 */
