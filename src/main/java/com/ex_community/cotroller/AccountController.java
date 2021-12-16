@@ -16,19 +16,18 @@ public class AccountController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "account/login";
     }
 
     @GetMapping("/register")
-    public String register(){
+    public String register() {
         return "account/register";
     }
 
     @PostMapping("/register")
-    public String register(User user){
+    public String register(User user) {
         userService.save(user);
         return "redirect:/";
     }
-
 }
